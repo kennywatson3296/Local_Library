@@ -1,15 +1,11 @@
 function getTotalBooksCount(books) {
   //adds the total of the books
-  let sum = 0
-  books.forEach((book) => sum += 1)
-  return sum
+ return addTotal(books)
 }
 
 function getTotalAccountsCount(accounts) {
   //adds the total of the accounts
-  let sum = 0
-  accounts.forEach((user) => sum += 1)
-  return sum
+  return addTotal(accounts)
 }
 
 function getBooksBorrowedCount(books) {
@@ -22,13 +18,13 @@ function getBooksBorrowedCount(books) {
 
 function getMostCommonGenres(books) {
   //creates an array of genres for each book
-  const bookGenres = books.map((book) => book.genre)
+  const bookGenres = books.map(({genre}) => genre)
   //declares the result array
   const result = []
   //loops through the created genre array
   bookGenres.map((genre) => {
     //checks if the genre exists in the result array
-const genreLocation = result.findIndex((element) => element.name === genre)
+const genreLocation = result.findIndex(({name}) => name === genre)
 //if the genre exists, adds one to the count of books with that genre
 if (genreLocation >= 0){
   result[genreLocation].count = result[genreLocation].count + 1
@@ -67,9 +63,9 @@ const result = []
 //loops through the books array
 books.map((author) => {
   //finds the author for the book
-  const findAuthor = authors.find((auth) => author.authorId === auth.id)
+  const findAuthor = authors.find(({id}) => author.authorId === id)
   //checks if the author exists in the result array
-  const authorLocation = result.findIndex((element) => element.name === (findAuthor.name.first + " " + findAuthor.name.last))
+  const authorLocation = result.findIndex(({name}) => name === (findAuthor.name.first + " " + findAuthor.name.last))
   //if author exists, adds the borrows account for the book to authors count
   if (authorLocation >= 0){
     result[authorLocation].count = result[authorLocation].count + (author.borrows.length)
@@ -85,6 +81,12 @@ books.map((author) => {
 return result.sort((authorA, authorB) => authorB.count - authorA.count).slice(0,5)
 
 }
+//helper function
+function addTotal(array) {
+  let sum = 0
+ array.forEach((arr) => sum += 1)
+  return sum
+}
 
 module.exports = {
   getTotalBooksCount,
@@ -93,4 +95,5 @@ module.exports = {
   getMostCommonGenres,
   getMostPopularBooks,
   getMostPopularAuthors,
+  addTotal,
 };

@@ -1,6 +1,6 @@
-function findAccountById(accounts, id) {
+function findAccountById(accounts, userId) {
   // use .find() to find account for id
-  let result = accounts.find((user) => user.id === id)
+  let result = accounts.find(({id}) => id === userId)
   //returns the found account
   return result
 }
@@ -20,7 +20,7 @@ function getTotalNumberOfBorrows(account, books) {
   //iterate books to get borrows by account id
   const first = books.forEach((book) =>{
   const borrow = book.borrows
-  const list = borrow.filter((borr) => borr.id === account.id)
+  const list = borrow.filter(({id}) => id === account.id)
   result.push(list.length)
 })
 //creates an accumulator to get the total amount of borrows by account
